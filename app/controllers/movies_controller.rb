@@ -3,7 +3,19 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    # Remember the sort across visits. If the user comes back with no sort params
+    # but we have a saved sort, redirect so the URL reflects the state (RESTful).
+    if params[:sort].blank? && session[:sort].present?
+      flash.keep   # don't lose "Movie was successfully destroyed." etc.
+      return redirect_to movies_path(sort: session[:sort], direction: session[:direction])
+    end
+
+    @sort_column    = Movie::SORTABLE_COLUMNS.include?(params[:sort]) ? params[:sort] : nil
+    @sort_direction = params[:direction] == "desc" ? "desc" : "asc"
+    session[:sort]      = @sort_column
+    session[:direction] = @sort_direction
+
+    @movies = Movie.sorted_by(@sort_column, @sort_direction)
   end
 
   # GET /movies/1 or /movies/1.json

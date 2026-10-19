@@ -1,16 +1,34 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Movies" %>
-
 <h1>Movies</h1>
 
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New movie", new_movie_path %>
+<table class="movies">
+  <colgroup>
+    <col class="<%= sort_class('title') %>">
+    <col class="<%= sort_class('rating') %>">
+    <col class="<%= sort_class('release_date') %>">
+  </colgroup>
+  <thead>
+    <tr>
+      <%= sort_header "Title", "title" %>
+      <%= sort_header "Rating", "rating" %>
+      <%= sort_header "Release date", "release_date" %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= link_to movie.title, movie %></td>
+        <td><%= movie.rating %></td>
+        <td><%= movie.release_date&.strftime("%b %-d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        <%= pluralize(@movies.size, "movie") %> · <%= link_to "Add a new movie", new_movie_path %>
+      </td>
+    </tr>
+  </tfoot>
+</table>

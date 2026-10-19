@@ -24,6 +24,16 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="site-header">
+      <%= link_to "RottenPotatoes", movies_path, class: "brand" %>
+      <nav>
+        <%= link_to "All movies", movies_path %>
+        <%= link_to "Add movie", new_movie_path %>
+      </nav>
+    </header>
+    <main class="container">
+      <%= yield %>
+    </main>
+    <footer class="site-footer">RottenPotatoes · built with Rails</footer>
   </body>
 </html>
