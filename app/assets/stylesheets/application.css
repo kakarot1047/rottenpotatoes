@@ -9,7 +9,7 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
- :root {
+:root {
   --bg: #fbf7f0; --ink: #2b2118; --accent: #a0522d; --line: #e4d9c8;
   --sorted-asc: #fbe3b8; --sorted-desc: #cfe3f2;
 }
@@ -23,20 +23,67 @@ a { color: var(--accent); }
 .site-header a { color: #fff; text-decoration: none; margin-left: 1rem; }
 .site-header .brand { margin-left: 0; font-weight: 700; font-size: 1.25rem; }
 .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+/* Only the movies list gets the wider layout; show/new/edit keep 900px */
+.container:has(.table-wrap) { max-width: 1120px; }
 .site-footer { text-align: center; padding: 2rem 1rem; color: #7a6a58; font-size: .875rem; }
 
-table.movies { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); }
-table.movies th, table.movies td { padding: .65rem .9rem; text-align: left; border-bottom: 1px solid var(--line); }
-table.movies thead th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+
+.table-wrap {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 1px 2px rgba(43,33,24,.06), 0 8px 24px rgba(43,33,24,.06);
+}
+
+table.movies { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+table.movies th,
+table.movies td { padding: .7rem 1rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+
+/* Header: small, spaced caps, one line */
+table.movies thead th {
+  white-space: nowrap; font-size: .75rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: #7a6a58;
+  border-bottom: 2px solid var(--line);
+}
 table.movies thead a { color: inherit; text-decoration: none; }
-table.movies thead a:hover { text-decoration: underline; }
+table.movies thead a:hover { color: var(--accent); }
+
+/* Keep short columns on one line; title and director absorb the wrapping */
+table.movies tbody td:nth-child(2),
+table.movies tbody td:nth-child(4),
+table.movies tbody td:nth-child(5) { white-space: nowrap; }
+
+/* Titles: bold, no underline until hover */
+table.movies tbody td:first-child a { font-weight: 600; color: var(--ink); text-decoration: none; }
+table.movies tbody td:first-child a:hover { color: var(--accent); text-decoration: underline; }
+table.movies tbody td:nth-child(3) { color: #5c4d3d; }
+
+/* Subtle hover that doesn't hide the sorted-column color */
+table.movies tbody tr:hover td { box-shadow: inset 0 0 0 9999px rgba(160,82,45,.05); }
+
+/* Sorted column highlight */
 col.sorted-asc  { background: var(--sorted-asc); }
 col.sorted-desc { background: var(--sorted-desc); }
-table.movies tfoot td { color: #7a6a58; font-size: .9rem; border-bottom: none; }
 
+/* Footer */
+table.movies tfoot td { border-top: 2px solid var(--line); border-bottom: none; color: #7a6a58; font-size: .9rem; }
+
+/* Rating pill */
+.badge {
+  display: inline-block; min-width: 2.75rem; padding: .1rem .5rem;
+  text-align: center; font-size: .75rem; font-weight: 600; letter-spacing: .03em;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--bg);
+}
+
+.stars { color: #d4a017; letter-spacing: .1em; white-space: nowrap; }
+.unrated { color: #9a8b78; font-style: italic; font-size: .9rem; }
+
+/* Show page card */
 .card { background: #fff; border: 1px solid var(--line); border-left: 5px solid var(--accent);
         border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
 
+/* New/Edit form */
 .movie-form div { margin-bottom: 1rem; }
 .movie-form input, .movie-form textarea, .movie-form select {
   width: 100%; padding: .5rem; border: 1px solid var(--line); border-radius: 4px; font: inherit; }

@@ -2,33 +2,41 @@
 
 <h1>Movies</h1>
 
-<table class="movies">
-  <colgroup>
-    <col class="<%= sort_class('title') %>">
-    <col class="<%= sort_class('rating') %>">
-    <col class="<%= sort_class('release_date') %>">
-  </colgroup>
-  <thead>
-    <tr>
-      <%= sort_header "Title", "title" %>
-      <%= sort_header "Rating", "rating" %>
-      <%= sort_header "Release date", "release_date" %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movies.each do |movie| %>
+<div class="table-wrap">
+  <table class="movies">
+    <colgroup>
+      <col class="<%= sort_class('title') %>">
+      <col class="<%= sort_class('rating') %>">
+      <col class="<%= sort_class('director') %>">
+      <col class="<%= sort_class('release_date') %>">
+      <col class="<%= sort_class('stars') %>">
+    </colgroup>
+    <thead>
       <tr>
-        <td><%= link_to movie.title, movie %></td>
-        <td><%= movie.rating %></td>
-        <td><%= movie.release_date&.strftime("%b %-d, %Y") %></td>
+        <%= sort_header "Title", "title" %>
+        <%= sort_header "Rating", "rating" %>
+        <%= sort_header "Director", "director" %>
+        <%= sort_header "Release date", "release_date" %>
+        <%= sort_header "Stars", "stars" %>
       </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="3">
-        <%= pluralize(@movies.size, "movie") %> · <%= link_to "Add a new movie", new_movie_path %>
-      </td>
-    </tr>
-  </tfoot>
-</table>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><%= link_to movie.title, movie %></td>
+          <td><span class="badge"><%= movie.rating %></span></td>
+          <td><%= movie.director.presence || "—" %></td>
+          <td><%= movie.release_date&.strftime("%b %-d, %Y") %></td>
+          <td><%= star_rating(movie.stars) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <%= pluralize(@movies.size, "movie") %> · <%= link_to "Add a new movie", new_movie_path %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

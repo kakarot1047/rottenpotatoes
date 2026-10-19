@@ -21,6 +21,11 @@
   </div>
 
   <div>
+    <%= form.label :director, style: "display: block" %>
+    <%= form.text_field :director %>
+  </div>
+
+  <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description, rows: 4 %>
   </div>
@@ -28,6 +33,13 @@
   <div>
     <%= form.label :release_date, style: "display: block" %>
     <%= form.date_field :release_date %>
+  </div>
+  
+  <div>
+    <%= form.label :stars, "My rating", style: "display: block" %>
+    <%= form.select :stars,
+                    (1..5).map { |n| ["★" * n, n] },
+                    { include_blank: "Not rated" } %>
   </div>
 
   <div>

@@ -16,7 +16,17 @@
 
   <div>
     <strong>Release date:</strong>
-    <%= movie.release_date %>
+    <%= movie.release_date&.strftime("%B %-d, %Y") %>
+  </div>
+
+  <div>
+    <strong>Director:</strong>
+    <%= movie.director %>
+  </div>
+
+  <div>
+    <strong>Stars:</strong>
+    <%= star_rating(movie.stars) %>
   </div>
 
 </div>
