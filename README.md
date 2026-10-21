@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # RottenPotatoes
 
 A small movie catalog I built in Rails for CSCE 606 (Homework 2, "Hello Rails"). It's a loose take on Rotten Tomatoes: you can add movies, look them up, fix their details, delete the ones you regret adding, and sort the whole list however you like.
@@ -105,4 +102,3 @@ git push heroku main
 Ruby 3.3.9, Rails 8.1, SQLite (development), PostgreSQL (production), Heroku, and a fair amount of trial and error.
 
 — Gokulan Valavan
->>>>>>> d04198e (Add README, fix director name typo)
